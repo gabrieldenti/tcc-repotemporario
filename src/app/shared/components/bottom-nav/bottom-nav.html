@@ -1,0 +1,24 @@
+<nav class="bg-white border-t border-slate-200 h-16 px-6 flex items-center justify-around w-full shrink-0">
+  
+  <a [routerLink]="rotaInicio" 
+     class="flex flex-col items-center justify-center gap-1 px-4 py-1.5 rounded-xl transition"
+     [ngClass]="abaAtiva === 'inicio' ? 'bg-slate-100 text-[#153969] font-semibold' : 'text-slate-400 font-medium'">
+    <img src="assets/icons/home_icon.svg" alt="Início" class="w-5 h-5" [ngClass]="{'opacity-60': abaAtiva !== 'inicio'}" />
+    <span class="text-xs">Início</span>
+  </a>
+
+  <a [routerLink]="rotaBuscar" 
+     class="flex flex-col items-center justify-center gap-1 px-4 py-1.5 rounded-xl transition"
+     [ngClass]="abaAtiva === 'buscar' ? 'bg-slate-100 text-[#153969] font-semibold' : 'text-slate-400 font-medium'">
+    <img src="assets/icons/search_icon.svg" alt="Buscar" class="w-5 h-5" [ngClass]="{'opacity-60': abaAtiva !== 'buscar'}" />
+    <span class="text-xs">Buscar</span>
+  </a>
+
+  <a [routerLink]="rotaPerfil" 
+     class="flex flex-col items-center justify-center gap-1 px-4 py-1.5 rounded-xl transition"
+     [ngClass]="abaAtiva === 'perfil' ? 'bg-slate-100 text-[#153969] font-semibold' : 'text-slate-400 font-medium'">
+    <img src="assets/icons/profile_icon.svg" alt="Perfil" class="w-5 h-5" [ngClass]="{'opacity-60': abaAtiva !== 'perfil'}" />
+    <span class="text-xs">Perfil</span>
+  </a>
+
+</nav>

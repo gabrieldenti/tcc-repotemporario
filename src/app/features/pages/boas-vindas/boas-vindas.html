@@ -1,0 +1,89 @@
+<!-- Cabeçalho Modo Logo -->
+<app-header modo="logo"></app-header>
+
+<!-- Conteúdo Dinâmico -->
+<app-container-content preenchimentoPersonalizado="px-6 py-6">
+  <div class="flex flex-col items-center w-full h-full justify-between">
+    
+    <!-- Bloco 1: Ícone de Destaque e Textos -->
+    <div class="flex flex-col items-center mt-2">
+      <!-- Círculos do Ícone (Carro + Badge Verde de Graduação) -->
+      <div class="relative w-32 h-32 flex items-center justify-center rounded-full bg-slate-200/60 mb-6">
+        <div class="w-24 h-24 rounded-full bg-[#153969] flex items-center justify-center relative shadow-lg">
+          <img src="assets/icons/car_icon_initial.svg" alt="Carro" class="w-12 h-12 brightness-0 invert" />
+          
+          <!-- Badge Verde (Chapéu de Graduação) -->
+          <div class="absolute -top-1 -right-1 w-8 h-8 rounded-full bg-[#10B981] border-2 border-white flex items-center justify-center">
+             <img src="assets/icons/study_icon_preferences.svg" alt="Aluno" class="w-4 h-4 brightness-0 invert" />
+          </div>
+        </div>
+      </div>
+
+      <h1 class="text-2xl font-extrabold text-[#153969] text-center mb-2 tracking-tight">Bem-vindo ao DirigeES</h1>
+      <p class="text-center text-slate-500 text-sm px-4">
+        Encontre o instrutor de direção ideal perto de você
+      </p>
+    </div>
+
+    <!-- Bloco 2: Grid 2x2 de Benefícios -->
+    <div class="bg-white rounded-[1.25rem] shadow-sm border border-slate-100 p-4 w-full my-6 grid grid-cols-2 gap-3">
+      
+      <!-- Card 1 -->
+      <div class="bg-slate-50 rounded-xl p-3 flex flex-col items-center justify-center text-center gap-2">
+        <div class="w-8 h-8 rounded-full bg-emerald-100/50 flex items-center justify-center">
+          <img src="assets/icons/verify_green_icon.svg" class="w-4 h-4" />
+        </div>
+        <span class="text-[11px] font-semibold text-[#153969]">Instrutores Verificados</span>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="bg-slate-50 rounded-xl p-3 flex flex-col items-center justify-center text-center gap-2">
+        <div class="w-8 h-8 rounded-full bg-emerald-100/50 flex items-center justify-center">
+          <img src="assets/icons/safe_icon.svg" class="w-4 h-4" />
+        </div>
+        <span class="text-[11px] font-semibold text-[#153969]">Pagamento Seguro</span>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="bg-slate-50 rounded-xl p-3 flex flex-col items-center justify-center text-center gap-2">
+        <div class="w-8 h-8 rounded-full bg-emerald-100/50 flex items-center justify-center">
+          <img src="assets/icons/star_green_icon.svg" class="w-4 h-4" />
+        </div>
+        <span class="text-[11px] font-semibold text-[#153969]">Avaliações Reais</span>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="bg-slate-50 rounded-xl p-3 flex flex-col items-center justify-center text-center gap-2">
+        <div class="w-8 h-8 rounded-full bg-emerald-100/50 flex items-center justify-center">
+          <img src="assets/icons/location_green_icon.svg" class="w-4 h-4" />
+        </div>
+        <span class="text-[11px] font-semibold text-[#153969]">Perto de Você</span>
+      </div>
+
+    </div>
+
+    <!-- Bloco 3: Botões de Ação e Termos -->
+    <div class="w-full flex flex-col gap-3">
+      
+      <!-- Botão Entrar Primário -->
+      <a routerLink="/login" class="w-full bg-[#153969] text-white font-semibold text-[15px] rounded-xl py-3.5 flex items-center justify-center gap-2 hover:bg-[#0f2a4d] transition shadow-md">
+        <span>Entrar</span>
+        <img src="assets/icons/arrow_icon.svg" alt="Seta" class="w-4 h-4 brightness-0 invert" />
+      </a>
+      
+      <!-- Botão Criar Conta Secundário -->
+      <a routerLink="/criar-conta" class="w-full bg-white text-[#153969] font-semibold text-[15px] rounded-xl py-3.5 border-2 border-[#153969] flex items-center justify-center hover:bg-slate-50 transition">
+        Criar Conta
+      </a>
+
+      <!-- Termos -->
+      <p class="text-center text-[11px] text-slate-500 mt-3 mb-1">
+        Ao continuar, você concorda com nossos <a href="#" class="text-[#153969] font-semibold">Termos</a>
+      </p>
+    </div>
+
+  </div>
+</app-container-content>
+
+<!-- Barra Inferior -->
+<app-bottom-nav abaAtiva="inicio"></app-bottom-nav>
