@@ -7,6 +7,7 @@ export interface PerfilInstrutor extends UsuarioBase {
   valorHora: number;
   regioesAtendimento: string[];
   disponivelParaNovosAlunos: boolean;
+  statusVisibilidade?: boolean;
   avaliacaoMedia: number;
   totalAvaliacoes: number;
   disponibilidadeSemanal: Record<string, string[]>;

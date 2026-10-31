@@ -56,12 +56,20 @@
         </button>
       }
       @if (exibirConfiguracao) {
-        <button type="button" class="w-9 h-9 rounded-full bg-white/15 flex items-center justify-center hover:bg-white/25 transition">
+        <button 
+          type="button" 
+          (click)="irParaEdicao()"
+          class="w-9 h-9 rounded-full bg-white/15 flex items-center justify-center hover:bg-white/25 transition cursor-pointer"
+          aria-label="Abrir perfil do instrutor">
           <img src="assets/icons/config_icon.svg" alt="Configurações" class="w-5 h-5" />
         </button>
       }
       @if (exibirBotaoEditar) {
-        <button type="button" class="w-9 h-9 rounded-full bg-white/15 flex items-center justify-center hover:bg-white/25 transition">
+        <button 
+          type="button" 
+          (click)="irParaEdicao()"
+          class="w-9 h-9 rounded-full bg-white/15 flex items-center justify-center hover:bg-white/25 transition cursor-pointer"
+          aria-label="Editar Perfil">
           <img src="assets/icons/edit_icon.svg" alt="Editar" class="w-4 h-4 brightness-0 invert" />
         </button>
       }

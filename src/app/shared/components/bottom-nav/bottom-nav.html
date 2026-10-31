@@ -14,7 +14,7 @@
     <span class="text-xs">Buscar</span>
   </a>
 
-  <a [routerLink]="rotaPerfil" 
+  <a [routerLink]="obterRotaPerfil()" 
      class="flex flex-col items-center justify-center gap-1 px-4 py-1.5 rounded-xl transition"
      [ngClass]="abaAtiva === 'perfil' ? 'bg-slate-100 text-[#153969] font-semibold' : 'text-slate-400 font-medium'">
     <img src="assets/icons/profile_icon.svg" alt="Perfil" class="w-5 h-5" [ngClass]="{'opacity-60': abaAtiva !== 'perfil'}" />

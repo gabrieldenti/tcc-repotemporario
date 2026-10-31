@@ -1,0 +1,327 @@
+@if (tipoUsuarioAtual === TipoConta.Instrutor) {
+  <app-header 
+    modo="painel" 
+    [exibirNotificacao]="true" 
+    [exibirConfiguracao]="true">
+  </app-header>
+} @else {
+  <app-header 
+    modo="painel" 
+    [textoLocalizacao]="cidadeSelecionada" 
+    [exibirNotificacao]="true">
+  </app-header>
+}
+
+<app-container-content espacamentoPersonalizado="px-5 py-5">
+
+  <!-- ========================================================= -->
+  <!-- VISÃO 1: PAINEL DO INSTRUTOR (HOME INSTRUTOR)             -->
+  <!-- ========================================================= -->
+  @if (tipoUsuarioAtual === TipoConta.Instrutor) {
+    <div class="flex flex-col w-full">
+      <div class="bg-white rounded-3xl shadow-xs border border-slate-100 p-5 w-full mb-7">
+        <div class="flex items-center gap-4">
+          <img [src]="fotoInstrutorLogado" [alt]="nomeInstrutorLogado" class="w-16 h-16 rounded-full object-cover border border-slate-200 shrink-0" />
+          <div class="flex flex-col">
+            <span class="text-xs text-slate-500 font-medium">Bem-vindo de volta,</span>
+            <h1 class="text-xl font-bold text-[#153969] mt-0.5 flex items-center gap-1.5">
+              <span>Olá, {{ nomeInstrutorLogado }}</span>
+              <span>👋</span>
+            </h1>
+            <div class="flex items-center gap-1.5 mt-1">
+              <img src="assets/icons/star_fill_icon.svg" alt="Avaliação" class="w-4 h-4" />
+              <span class="text-xs font-medium text-slate-500">{{ avaliacaoInstrutorLogado }} · {{ totalAvaliacoesInstrutorLogado }} avaliações</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="border-t border-slate-100 my-4"></div>
+
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <span class="w-2.5 h-2.5 rounded-full transition" [ngClass]="disponivelParaNovosAlunos ? 'bg-[#159947]' : 'bg-slate-300'"></span>
+            <span class="text-sm font-bold text-[#153969]">Disponível para novos alunos</span>
+          </div>
+
+          <button
+            type="button"
+            role="switch"
+            [attr.aria-checked]="disponivelParaNovosAlunos"
+            (click)="alternarDisponibilidadeNovosAlunos()"
+            class="w-12 h-7 rounded-full p-1 transition-colors duration-200 ease-in-out flex items-center cursor-pointer"
+            [ngClass]="disponivelParaNovosAlunos ? 'bg-[#3B82F6] justify-end' : 'bg-slate-300 justify-start'">
+            <span class="w-5 h-5 bg-white rounded-full shadow-xs transition-transform"></span>
+          </button>
+        </div>
+      </div>
+
+      <span class="text-xs font-semibold text-[#153969] uppercase tracking-wider mb-3.5">Ações Rápidas</span>
+
+      <div class="grid grid-cols-2 gap-3.5">
+        <button
+          type="button"
+          (click)="irParaEditarPerfil()"
+          class="bg-white hover:bg-slate-50/80 rounded-3xl shadow-xs border border-slate-100 p-5 text-left flex flex-col justify-between transition cursor-pointer">
+          <div class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mb-4">
+            <img src="assets/icons/edit_icon.svg" alt="Editar Perfil" class="w-5 h-5" />
+          </div>
+          <div>
+            <h2 class="text-[15px] font-bold text-[#153969] mb-1">Editar Perfil</h2>
+            <p class="text-xs text-slate-500 leading-relaxed">Atualize suas informações pessoais</p>
+          </div>
+        </button>
+
+        <button
+          type="button"
+          (click)="irParaGerenciarServicos()"
+          class="bg-white hover:bg-slate-50/80 rounded-3xl shadow-xs border border-slate-100 p-5 text-left flex flex-col justify-between transition cursor-pointer">
+          <div class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mb-4">
+            <img src="assets/icons/manage_icon.svg" alt="Gerenciar Serviços" class="w-5 h-5" />
+          </div>
+          <div>
+            <h2 class="text-[15px] font-bold text-[#153969] mb-1">Gerenciar Serviços</h2>
+            <p class="text-xs text-slate-500 leading-relaxed">Categorias, valores e horários</p>
+          </div>
+        </button>
+      </div>
+    </div>
+  }
+
+  <!-- ========================================================= -->
+  <!-- VISÃO 2: VITRINE DE BUSCA DO ALUNO (RF14, RF15, RF16)     -->
+  <!-- ========================================================= -->
+  @else {
+    <div class="flex flex-col w-full pb-4">
+
+      <!-- Barra de Pesquisa -->
+      <div class="relative w-full mb-3.5">
+        <img src="assets/icons/search_icon.svg" alt="Buscar" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 opacity-45 pointer-events-none" />
+        <input
+          type="text"
+          [(ngModel)]="termoBusca"
+          placeholder="Buscar instrutores..."
+          class="w-full pl-11 pr-11 py-3.5 bg-white border border-slate-200/80 rounded-2xl text-sm text-slate-700 placeholder:text-slate-400 shadow-2xs outline-none focus:border-[#153969] transition" />
+        <button type="button" class="absolute right-3.5 top-1/2 -translate-y-1/2 p-1 hover:opacity-75 transition" aria-label="Busca por voz">
+          <img src="assets/icons/mic_icon.svg" alt="Microfone" class="w-4 h-4 opacity-50" />
+        </button>
+      </div>
+
+      <!-- Botões de Abertura do Modal de Filtros (RF15 e RF16) -->
+      <div class="grid grid-cols-2 gap-3 mb-4">
+        <button
+          type="button"
+          (click)="abrirModalFiltros()"
+          class="py-3 px-3 rounded-2xl bg-white text-[#153969] border border-slate-200/80 text-xs font-bold flex items-center justify-center gap-2 hover:bg-slate-50 transition shadow-2xs cursor-pointer">
+          <svg class="w-4 h-4 text-[#153969] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+          </svg>
+          <span>Filtrar por Categoria</span>
+        </button>
+
+        <button
+          type="button"
+          (click)="abrirModalFiltros()"
+          class="py-3 px-3 rounded-2xl bg-white text-[#153969] border border-slate-200/80 text-xs font-bold flex items-center justify-center gap-2 hover:bg-slate-50 transition shadow-2xs cursor-pointer">
+          <svg class="w-4 h-4 text-[#153969] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+          </svg>
+          <span>Ordenar por Preço</span>
+        </button>
+      </div>
+
+      <!-- Título da Seção e Contador -->
+      <div class="flex items-center justify-between mb-3.5 mt-1">
+        <h2 class="text-base font-extrabold text-[#153969]">Instrutores disponíveis</h2>
+        <span class="text-xs text-slate-400 font-medium">{{ obterInstrutoresFiltrados().length }} resultados</span>
+      </div>
+
+      <!-- Lista de Instrutores (RF14) -->
+      <div class="flex flex-col gap-3.5">
+        @for (instrutor of obterInstrutoresFiltrados(); track instrutor.id) {
+          <div class="bg-white rounded-2xl shadow-xs border border-slate-100 p-4 w-full flex items-start gap-3.5">
+            <img [src]="instrutor.fotoPerfilUrl" [alt]="instrutor.nomeCompleto" class="w-16 h-16 rounded-full object-cover border border-slate-200 shrink-0 mt-0.5" />
+
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between gap-2">
+                <h3 class="text-[15px] font-bold text-[#153969] truncate">{{ instrutor.nomeCompleto }}</h3>
+                <span class="text-sm font-extrabold text-[#153969] shrink-0">R$ {{ instrutor.valorHora }}/h</span>
+              </div>
+
+              <div class="flex items-center gap-1 mt-0.5">
+                <img src="assets/icons/star_fill_icon.svg" alt="Nota" class="w-3.5 h-3.5" />
+                <span class="text-xs font-bold text-[#153969]">{{ instrutor.avaliacaoMedia }}</span>
+                <span class="text-xs text-slate-400">({{ instrutor.totalAvaliacoes }})</span>
+              </div>
+
+              <div class="flex items-center gap-1 mt-1 text-slate-500">
+                <img src="assets/icons/location_icon_initial.svg" alt="Local" class="w-3.5 h-3.5 opacity-60 shrink-0" />
+                <span class="text-xs truncate">{{ instrutor.bairroRegiao }}</span>
+              </div>
+
+              <div class="flex items-center justify-between mt-3 pt-0.5">
+                <div class="flex items-center gap-1">
+                  @for (categoria of todasCategorias; track categoria) {
+                    <span
+                      class="w-6 h-6 rounded-full text-[11px] font-bold flex items-center justify-center border"
+                      [ngClass]="instrutorAtendeCategoria(instrutor, categoria)
+                        ? 'bg-[#153969] border-[#153969] text-white'
+                        : 'bg-white border-[#153969] text-[#153969]'">
+                      {{ categoria }}
+                    </span>
+                  }
+                </div>
+
+                <button
+                  type="button"
+                  (click)="verPerfilInstrutor(instrutor.id)"
+                  class="text-xs font-semibold text-[#153969] hover:underline flex items-center gap-1 shrink-0 cursor-pointer">
+                  <span>ver perfil &rarr;</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+
+    </div>
+  }
+
+</app-container-content>
+
+<!-- ========================================================= -->
+<!-- MODAL: FILTRAR E ORDENAR (BOTTOM-SHEET) (RF15, RF16)     -->
+<!-- ========================================================= -->
+@if (exibirModalFiltros) {
+  <div class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-end justify-center animate-fade-in">
+    <div class="w-full max-w-[430px] bg-white rounded-t-[2.5pfx] rounded-t-[32px] p-6 max-h-[90vh] overflow-y-auto shadow-2xl flex flex-col">
+      
+      <!-- Barra superior do modal com botão de fechar -->
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="text-xl font-extrabold text-[#153969]">Filtrar e Ordenar</h2>
+        <button 
+          type="button" 
+          (click)="fecharModalFiltros()"
+          class="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200 transition cursor-pointer"
+          aria-label="Fechar modal">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- 1. Categoria de Habilitação (Múltipla seleção) -->
+      <div class="mb-5">
+        <div class="flex items-center justify-between mb-2.5">
+          <span class="text-xs font-bold text-[#153969] uppercase tracking-wider">Categoria de Habilitação</span>
+          <span class="text-[11px] text-slate-400 font-medium">Múltipla seleção</span>
+        </div>
+
+        <div class="flex items-center justify-between gap-2">
+          @for (cat of todasCategorias; track cat) {
+            <button
+              type="button"
+              (click)="alternarCategoriaModal(cat)"
+              class="w-12 h-12 rounded-full font-bold text-sm flex items-center justify-center transition border-2 cursor-pointer"
+              [ngClass]="categoriaEstaSelecionadaModal(cat)
+                ? 'bg-[#153969] border-[#153969] text-white shadow-xs'
+                : 'bg-white border-slate-200 text-[#153969] hover:border-[#153969]'">
+              {{ cat }}
+            </button>
+          }
+        </div>
+      </div>
+
+      <!-- 2. Ordenar por -->
+      <div class="mb-5">
+        <span class="block text-xs font-bold text-[#153969] uppercase tracking-wider mb-3">Ordenar por</span>
+
+        <div class="flex flex-col gap-3">
+          
+          <label class="flex items-center justify-between cursor-pointer py-1">
+            <span class="text-sm font-medium text-slate-700">Menor Preço</span>
+            <input type="radio" name="ordenacao" [(ngModel)]="criterioOrdenacao" value="menor_preco" class="w-4 h-4 text-[#153969]" />
+          </label>
+
+          <label class="flex items-center justify-between cursor-pointer py-1">
+            <span class="text-sm font-medium text-slate-700">Maior Avaliação</span>
+            <input type="radio" name="ordenacao" [(ngModel)]="criterioOrdenacao" value="maior_avaliacao" class="w-4 h-4 text-[#153969]" />
+          </label>
+
+          <label class="flex items-center justify-between cursor-pointer py-1">
+            <span class="text-sm font-medium text-slate-700">Mais Próximo</span>
+            <input type="radio" name="ordenacao" [(ngModel)]="criterioOrdenacao" value="mais_proximo" class="w-4 h-4 text-[#153969]" />
+          </label>
+
+          <label class="flex items-center justify-between cursor-pointer py-1">
+            <span class="text-sm font-medium text-slate-700">Mais Recente</span>
+            <input type="radio" name="ordenacao" [(ngModel)]="criterioOrdenacao" value="mais_recente" class="w-4 h-4 text-[#153969]" />
+          </label>
+
+        </div>
+      </div>
+
+      <!-- 3. Faixa de Preço -->
+      <div class="mb-5">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-bold text-[#153969] uppercase tracking-wider">Faixa de Preço</span>
+          <span class="text-xs font-extrabold text-[#153969]">R$ {{ precoMinimo }} – R$ {{ precoMaximo }}</span>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <input 
+            type="range" 
+            min="50" 
+            max="150" 
+            step="5"
+            [(ngModel)]="precoMaximo"
+            class="w-full accent-[#153969] cursor-pointer" />
+        </div>
+        <div class="flex justify-between text-[11px] text-slate-400 mt-1">
+          <span>R$ 50</span>
+          <span>R$ 150</span>
+        </div>
+      </div>
+
+      <!-- 4. Avaliação Mínima -->
+      <div class="mb-6">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-bold text-[#153969] uppercase tracking-wider">Avaliação Mínima</span>
+          <span class="text-[11px] text-slate-400">4 estrelas ou mais</span>
+        </div>
+
+        <div class="flex items-center gap-1.5">
+          @for (estrela of [1, 2, 3, 4, 5]; track estrela) {
+            <svg class="w-6 h-6" [ngClass]="estrela <= avaliacaoMinima ? 'text-amber-400 fill-amber-400' : 'text-slate-300 fill-slate-200'" viewBox="0 0 24 24">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+            </svg>
+          }
+        </div>
+      </div>
+
+      <!-- Ações do Modal -->
+      <div class="grid grid-cols-2 gap-3 mt-auto pt-2">
+        <button
+          type="button"
+          (click)="limparFiltrosModal()"
+          class="py-3.5 px-4 rounded-2xl bg-white text-[#153969] border border-[#153969] font-bold text-sm hover:bg-slate-50 transition cursor-pointer">
+          Limpar Filtros
+        </button>
+
+        <button
+          type="button"
+          (click)="fecharModalFiltros()"
+          class="py-3.5 px-4 rounded-2xl bg-[#153969] text-white font-bold text-sm hover:bg-[#0f2a4d] transition shadow-sm cursor-pointer">
+          Ver {{ obterInstrutoresFiltrados().length }} Resultados
+        </button>
+      </div>
+
+    </div>
+  </div>
+}
+
+<app-bottom-nav 
+  abaAtiva="buscar" 
+  rotaInicio="/vitrine" 
+  rotaBuscar="/vitrine" 
+  rotaPerfil="/meu-perfil">
+</app-bottom-nav>

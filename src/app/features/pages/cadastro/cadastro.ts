@@ -84,6 +84,8 @@ export class Cadastro {
       ...this.formularioCadastro.value,
     };
 
+    localStorage.setItem('nomeUsuario', dadosCadastro.nomeCompleto);
+
     this.servicoAutenticacao.cadastrar(dadosCadastro).subscribe({
       next: () => {
         this.redirecionarPosCadastro();

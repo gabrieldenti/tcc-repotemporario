@@ -12,4 +12,14 @@ import { CommonModule } from '@angular/common';
   styleUrl: './boas-vindas.css',
   templateUrl: './boas-vindas.html',
 })
-export class BoasVindas {}
+export class BoasVindas {
+  modalTermosAberto: boolean = false;
+
+  abrirModalTermos(): void {
+    this.modalTermosAberto = true;
+  }
+
+  fecharModalTermos(): void {
+    this.modalTermosAberto = false;
+  }
+}

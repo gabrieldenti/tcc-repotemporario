@@ -1,0 +1,90 @@
+<app-header modo="logo"></app-header>
+
+<app-container-content espacamentoPersonalizado="px-5 py-6">
+  <div class="flex flex-col items-center w-full pb-4">
+
+    <!-- Ícone de Sucesso com Círculos Concêntricos Verdes -->
+    <div class="w-36 h-36 rounded-full bg-emerald-50/70 flex items-center justify-center mb-4">
+      <div class="w-24 h-24 rounded-full bg-emerald-100/80 flex items-center justify-center">
+        <img src="assets/icons/confirm_icon.svg" alt="Sucesso" class="w-12 h-12" />
+      </div>
+    </div>
+
+    <!-- Etiqueta do Tipo de Cadastro -->
+    <span class="text-[11px] font-bold text-[#153969] uppercase tracking-[0.15em] mb-1.5">
+      {{ etiquetaPerfil }}
+    </span>
+
+    <!-- Título e Descrição -->
+    <h1 class="text-2xl font-extrabold text-[#153969] text-center mb-2 tracking-tight">
+      Conta Criada com Sucesso!
+    </h1>
+    <p class="text-slate-500 text-sm text-center px-3 leading-relaxed mb-6">
+      {{ descricaoPrincipal }}
+    </p>
+
+    <!-- Card 1: Próximos Passos -->
+    <div class="bg-white rounded-2xl shadow-xs border border-slate-100 p-5 w-full mb-4">
+      <div class="flex items-center gap-2.5 mb-4">
+        <img [src]="iconeCabecalhoPassos" alt="Próximos passos" class="w-5 h-5" />
+        <h2 class="text-[15px] font-bold text-[#153969]">
+          Próximos passos
+        </h2>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        @for (passo of proximosPassos; track passo.titulo) {
+          <div class="flex items-start gap-3">
+            <div class="w-6 h-6 rounded-full bg-emerald-100/80 flex items-center justify-center shrink-0 mt-0.5">
+              <img src="assets/icons/check_icon_preferences.svg" alt="Concluído" class="w-3.5 h-3.5" />
+            </div>
+
+            <div class="flex flex-col">
+              <h3 class="text-sm font-medium text-[#153969] leading-snug">
+                {{ passo.titulo }}
+              </h3>
+              <p class="text-xs text-slate-500 leading-relaxed mt-0.5">
+                {{ passo.descricao }}
+              </p>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Card 2: Atalhos Rápidos (Perfil/Documentos/Agenda ou Buscar/Próximos/Avaliados) -->
+    <div class="bg-white rounded-2xl shadow-xs border border-slate-100 py-4 px-6 w-full grid grid-cols-3 gap-4 mb-6">
+      @for (atalho of atalhosRapidos; track atalho.rotulo) {
+        <button
+          type="button"
+          (click)="navegarParaAtalho(atalho.rota)"
+          class="flex flex-col items-center justify-center gap-2 group">
+          <div class="w-11 h-11 rounded-full bg-emerald-100/80 group-hover:bg-emerald-200/70 flex items-center justify-center transition">
+            <img [src]="atalho.icone" [alt]="atalho.rotulo" class="w-5 h-5" />
+          </div>
+          <span class="text-xs font-semibold text-[#153969]">
+            {{ atalho.rotulo }}
+          </span>
+        </button>
+      }
+    </div>
+
+    <!-- Botão Primário: Completar Perfil (Instrutor) / Explorar Instrutores (Aluno) -->
+    <button
+      type="button"
+      (click)="executarAcaoPrincipal()"
+      class="w-full bg-[#153969] hover:bg-[#0f2a4d] text-white font-bold text-[15px] rounded-2xl py-4 flex items-center justify-center gap-2.5 transition shadow-sm mb-4">
+      <span>{{ textoBotaoPrincipal }}</span>
+      <img src="assets/icons/arrow_icon.svg" alt="Avançar" class="w-4 h-4 brightness-0 invert" />
+    </button>
+
+    <!-- Link Secundário: Voltar para Home -->
+    <button
+      type="button"
+      (click)="voltarParaHome()"
+      class="text-sm font-medium text-[#153969] hover:underline transition">
+      Voltar para Home
+    </button>
+
+  </div>
+</app-container-content>

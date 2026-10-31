@@ -2,88 +2,146 @@
 <app-header modo="logo"></app-header>
 
 <!-- Conteúdo Dinâmico -->
-<app-container-content preenchimentoPersonalizado="px-6 py-6">
+<app-container-content preenchimentoPersonalizado="px-4 py-5 sm:px-6 sm:py-6">
   <div class="flex flex-col items-center w-full h-full justify-between">
-    
-    <!-- Bloco 1: Ícone de Destaque e Textos -->
-    <div class="flex flex-col items-center mt-2">
-      <!-- Círculos do Ícone (Carro + Badge Verde de Graduação) -->
-      <div class="relative w-32 h-32 flex items-center justify-center rounded-full bg-slate-200/60 mb-6">
-        <div class="w-24 h-24 rounded-full bg-[#153969] flex items-center justify-center relative shadow-lg">
-          <img src="assets/icons/car_icon_initial.svg" alt="Carro" class="w-12 h-12 brightness-0 invert" />
-          
-          <!-- Badge Verde (Chapéu de Graduação) -->
-          <div class="absolute -top-1 -right-1 w-8 h-8 rounded-full bg-[#10B981] border-2 border-white flex items-center justify-center">
-             <img src="assets/icons/study_icon_preferences.svg" alt="Aluno" class="w-4 h-4 brightness-0 invert" />
+
+    <div class="flex flex-col items-center mt-2 w-full">
+      <div class="relative flex items-center justify-center mb-6">
+        <div class="w-44 h-44 rounded-full bg-slate-200/70 flex items-center justify-center">
+          <div class="w-32 h-32 rounded-full bg-[#153969] flex items-center justify-center relative shadow-lg">
+            <img src="assets/icons/car_icon_initial.svg" alt="Carro" class="w-14 h-14 brightness-0 invert" />
+
+            <div class="absolute -top-1 -right-1 w-10 h-10 rounded-full bg-[#10B981] border-2 border-white flex items-center justify-center shadow-sm">
+              <img src="assets/icons/study_icon_preferences.svg" alt="Aluno" class="w-5 h-5 brightness-0 invert" />
+            </div>
           </div>
         </div>
       </div>
 
-      <h1 class="text-2xl font-extrabold text-[#153969] text-center mb-2 tracking-tight">Bem-vindo ao DirigeES</h1>
-      <p class="text-center text-slate-500 text-sm px-4">
+      <h1 class="text-[2.2rem] leading-none font-extrabold text-[#153969] text-center tracking-tight mb-3">
+        Bem-vindo ao DirigeES
+      </h1>
+      <p class="text-center text-slate-500 text-base px-10 leading-snug">
         Encontre o instrutor de direção ideal perto de você
       </p>
     </div>
 
-    <!-- Bloco 2: Grid 2x2 de Benefícios -->
-    <div class="bg-white rounded-[1.25rem] shadow-sm border border-slate-100 p-4 w-full my-6 grid grid-cols-2 gap-3">
-      
-      <!-- Card 1 -->
-      <div class="bg-slate-50 rounded-xl p-3 flex flex-col items-center justify-center text-center gap-2">
-        <div class="w-8 h-8 rounded-full bg-emerald-100/50 flex items-center justify-center">
-          <img src="assets/icons/verify_green_icon.svg" class="w-4 h-4" />
+    <div class="bg-white rounded-[1.5rem] shadow-sm border border-slate-100 p-3 w-full my-5 grid grid-cols-2 gap-2.5">
+      <div class="bg-slate-50 rounded-2xl p-3 flex flex-col items-center justify-center text-center gap-2 min-h-[92px]">
+        <div class="w-8 h-8 rounded-full bg-emerald-100/70 flex items-center justify-center">
+          <img src="assets/icons/verify_green_icon.svg" alt="Instrutores verificados" class="w-4 h-4" />
         </div>
-        <span class="text-[11px] font-semibold text-[#153969]">Instrutores Verificados</span>
+        <span class="text-[11px] font-semibold text-[#153969] leading-tight">Instrutores Verificados</span>
       </div>
 
-      <!-- Card 2 -->
-      <div class="bg-slate-50 rounded-xl p-3 flex flex-col items-center justify-center text-center gap-2">
-        <div class="w-8 h-8 rounded-full bg-emerald-100/50 flex items-center justify-center">
-          <img src="assets/icons/safe_icon.svg" class="w-4 h-4" />
+      <div class="bg-slate-50 rounded-2xl p-3 flex flex-col items-center justify-center text-center gap-2 min-h-[92px]">
+        <div class="w-8 h-8 rounded-full bg-emerald-100/70 flex items-center justify-center">
+          <img src="assets/icons/safe_icon.svg" alt="Pagamento seguro" class="w-4 h-4" />
         </div>
-        <span class="text-[11px] font-semibold text-[#153969]">Pagamento Seguro</span>
+        <span class="text-[11px] font-semibold text-[#153969] leading-tight">Pagamento Seguro</span>
       </div>
 
-      <!-- Card 3 -->
-      <div class="bg-slate-50 rounded-xl p-3 flex flex-col items-center justify-center text-center gap-2">
-        <div class="w-8 h-8 rounded-full bg-emerald-100/50 flex items-center justify-center">
-          <img src="assets/icons/star_green_icon.svg" class="w-4 h-4" />
+      <div class="bg-slate-50 rounded-2xl p-3 flex flex-col items-center justify-center text-center gap-2 min-h-[92px]">
+        <div class="w-8 h-8 rounded-full bg-emerald-100/70 flex items-center justify-center">
+          <img src="assets/icons/star_green_icon.svg" alt="Avaliações reais" class="w-4 h-4" />
         </div>
-        <span class="text-[11px] font-semibold text-[#153969]">Avaliações Reais</span>
+        <span class="text-[11px] font-semibold text-[#153969] leading-tight">Avaliações Reais</span>
       </div>
 
-      <!-- Card 4 -->
-      <div class="bg-slate-50 rounded-xl p-3 flex flex-col items-center justify-center text-center gap-2">
-        <div class="w-8 h-8 rounded-full bg-emerald-100/50 flex items-center justify-center">
-          <img src="assets/icons/location_green_icon.svg" class="w-4 h-4" />
+      <div class="bg-slate-50 rounded-2xl p-3 flex flex-col items-center justify-center text-center gap-2 min-h-[92px]">
+        <div class="w-8 h-8 rounded-full bg-emerald-100/70 flex items-center justify-center">
+          <img src="assets/icons/location_green_icon.svg" alt="Perto de você" class="w-4 h-4" />
         </div>
-        <span class="text-[11px] font-semibold text-[#153969]">Perto de Você</span>
+        <span class="text-[11px] font-semibold text-[#153969] leading-tight">Perto de Você</span>
       </div>
-
     </div>
 
-    <!-- Bloco 3: Botões de Ação e Termos -->
-    <div class="w-full flex flex-col gap-3">
-      
-      <!-- Botão Entrar Primário -->
-      <a routerLink="/login" class="w-full bg-[#153969] text-white font-semibold text-[15px] rounded-xl py-3.5 flex items-center justify-center gap-2 hover:bg-[#0f2a4d] transition shadow-md">
+    <div class="w-full flex flex-col gap-3 mt-1">
+      <a routerLink="/login" class="w-full bg-[#153969] text-white font-semibold text-[15px] rounded-2xl py-3.5 flex items-center justify-center gap-2 hover:bg-[#0f2a4d] transition shadow-md">
         <span>Entrar</span>
         <img src="assets/icons/arrow_icon.svg" alt="Seta" class="w-4 h-4 brightness-0 invert" />
       </a>
-      
-      <!-- Botão Criar Conta Secundário -->
-      <a routerLink="/criar-conta" class="w-full bg-white text-[#153969] font-semibold text-[15px] rounded-xl py-3.5 border-2 border-[#153969] flex items-center justify-center hover:bg-slate-50 transition">
+
+      <a routerLink="/criar-conta" class="w-full bg-white text-[#153969] font-semibold text-[15px] rounded-2xl py-3.5 border-2 border-[#153969] flex items-center justify-center hover:bg-slate-50 transition">
         Criar Conta
       </a>
 
-      <!-- Termos -->
-      <p class="text-center text-[11px] text-slate-500 mt-3 mb-1">
-        Ao continuar, você concorda com nossos <a href="#" class="text-[#153969] font-semibold">Termos</a>
+      <p class="text-center text-[11px] text-slate-500 mt-2 mb-1">
+        Ao continuar, você concorda com nossos
+        <button
+          type="button"
+          (click)="abrirModalTermos()"
+          class="text-[#153969] font-semibold hover:underline cursor-pointer">
+          Termos de Uso e LGPD
+        </button>
       </p>
     </div>
 
   </div>
 </app-container-content>
 
-<!-- Barra Inferior -->
+<!-- Modal de Termos de Uso e Política de Privacidade (RNF04 / Seção 3.2.1 / Anexos A e B) -->
+@if (modalTermosAberto) {
+  <div class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="bg-white w-full max-w-md rounded-t-3xl sm:rounded-2xl max-h-[85vh] flex flex-col p-5 shadow-2xl">
+      
+      <div class="flex items-start justify-between border-b border-slate-100 pb-3 shrink-0">
+        <div class="flex items-center gap-2">
+          <img src="assets/icons/safe_icon.svg" alt="LGPD" class="w-5 h-5" />
+          <div>
+            <h2 class="text-base font-bold text-[#153969]">Termos de Uso e Privacidade</h2>
+            <p class="text-[11px] text-slate-500">Conformidade Legal e LGPD (RNF04)</p>
+          </div>
+        </div>
+        <button
+          type="button"
+          (click)="fecharModalTermos()"
+          class="text-slate-400 hover:text-slate-600 text-sm font-bold px-2 py-1">
+          ✕
+        </button>
+      </div>
+
+      <div class="overflow-y-auto py-4 space-y-3 text-xs text-slate-600 leading-relaxed flex-1">
+        <div class="bg-slate-50 rounded-xl p-3 border border-slate-100">
+          <h3 class="font-bold text-[#153969] mb-1">1. Intermediação e Resolução CONTRAN Nº 1.020/2025</h3>
+          <p>
+            A plataforma <strong>DirigeES</strong> atua como um ambiente digital de intermediação entre alunos de primeira habilitação e instrutores de trânsito autônomos credenciados na região da Grande Vitória/ES, nos termos dos Art. 36, 37, 109 e 112 da Resolução nº 1.020/2025 do CONTRAN.
+          </p>
+        </div>
+
+        <div class="bg-slate-50 rounded-xl p-3 border border-slate-100">
+          <h3 class="font-bold text-[#153969] mb-1">2. Validação Documental Obrigatória</h3>
+          <p>
+            Para segurança das partes e prevenção a fraudes, a liberação das funcionalidades da plataforma é condicionada ao envio e aprovação prévia de documentos oficiais: <strong>RG/CNH e LADV vigente</strong> para alunos, e <strong>Credencial do DETRAN-ES e CRLV</strong> para instrutores.
+          </p>
+        </div>
+
+        <div class="bg-emerald-50/70 rounded-xl p-3 border border-emerald-100">
+          <h3 class="font-bold text-emerald-900 mb-1">3. Tratamento de Dados e LGPD (Lei nº 13.709/2018)</h3>
+          <p class="text-emerald-800">
+            Em conformidade com o Art. 11, inciso II, alínea "g" da LGPD, os dados cadastrais e os documentos de identificação recolhidos são tratados exclusivamente para verificação de autenticidade, cumprimento regulatório e garantia da prevenção à fraude e segurança do titular.
+          </p>
+        </div>
+
+        <div class="bg-slate-50 rounded-xl p-3 border border-slate-100">
+          <h3 class="font-bold text-[#153969] mb-1">4. Negociação Direta Externa</h3>
+          <p>
+            O contato final e o agendamento das aulas práticas ocorrem mediante redirecionamento seguro para o WhatsApp oficial do instrutor selecionado.
+          </p>
+        </div>
+      </div>
+
+      <div class="pt-3 border-t border-slate-100 shrink-0">
+        <button
+          type="button"
+          (click)="fecharModalTermos()"
+          class="w-full bg-[#153969] hover:bg-[#0f2a4d] text-white font-semibold text-xs rounded-xl py-3.5 transition shadow-sm">
+          Li e Compreendi os Termos
+        </button>
+      </div>
+
+    </div>
+  </div>
+}
+
 <app-bottom-nav abaAtiva="inicio"></app-bottom-nav>

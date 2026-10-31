@@ -1,0 +1,230 @@
+<app-header 
+  modo="voltar" 
+  titulo="Meus Serviços" 
+  [exibirBotaoAdicionar]="true"
+  rotaVoltar="/vitrine">
+</app-header>
+
+<app-container-content espacamentoPersonalizado="px-5 py-5">
+  <div class="flex w-full flex-col pb-6">
+
+    <div class="mb-6 flex w-full items-center justify-between rounded-[18px] border border-slate-200 bg-white px-4 py-3 shadow-sm">
+      <div class="flex items-center gap-3.5">
+        <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-emerald-100/80">
+          <svg class="h-5 w-5 text-[#159947]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="7" width="20" height="10" rx="5" />
+            <circle cx="8" cy="12" r="2" fill="currentColor" />
+          </svg>
+        </div>
+
+        <div class="flex flex-col">
+          <h2 class="text-[15px] font-semibold leading-snug text-[#153969]">
+            Disponível para novos alunos
+          </h2>
+          <span class="text-xs text-slate-400">Receba novas solicitações</span>
+        </div>
+      </div>
+
+      <button
+        type="button"
+        role="switch"
+        [attr.aria-checked]="disponivelParaNovosAlunos"
+        (click)="alternarDisponibilidade()"
+        [ngClass]="disponivelParaNovosAlunos ? 'justify-end bg-[#1ebd69]' : 'justify-start bg-slate-300'"
+        class="flex h-7 w-14 cursor-pointer items-center rounded-full p-1 transition-all duration-200 ease-in-out"
+        aria-label="Alternar disponibilidade para novos alunos"
+      >
+        <span class="h-5 w-5 rounded-full bg-white shadow-sm"></span>
+      </button>
+    </div>
+
+    <span class="mb-2.5 block text-[11px] font-extrabold uppercase tracking-[0.14em] text-[#153969]">
+      Categorias Oferecidas
+    </span>
+
+    <div class="mb-6 flex w-full flex-col items-center rounded-[18px] border border-slate-200 bg-white p-4 shadow-sm">
+      <div class="mb-3.5 grid w-full grid-cols-5 gap-2">
+        @for (categoria of listaCategorias; track categoria) {
+          <button
+            type="button"
+            (click)="alternarCategoria(categoria)"
+            class="mx-auto flex aspect-square w-full max-w-[3.25rem] items-center justify-center rounded-full border-2 text-base font-bold transition-all"
+            [ngClass]="categoriaEstaSelecionada(categoria)
+              ? 'border-[#153969] bg-[#153969] text-white shadow-sm'
+              : 'border-[#153969] bg-white text-[#153969]'"
+          >
+            {{ categoria }}
+          </button>
+        }
+      </div>
+
+      <span class="text-center text-xs text-slate-400">Toque para ativar ou desativar categorias</span>
+    </div>
+
+    <span class="mb-2.5 block text-[11px] font-extrabold uppercase tracking-[0.14em] text-[#153969]">
+      Valor por Hora
+    </span>
+
+    <div class="mb-6 w-full rounded-[18px] border border-slate-200 bg-white p-4 shadow-sm">
+      <div (click)="alternarEdicaoValorHora()" class="flex cursor-pointer items-center justify-between">
+        <div class="flex items-center gap-3.5">
+          <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-slate-100">
+            <img src="assets/icons/money_icon.svg" alt="Valor da aula" class="h-5 w-5" />
+          </div>
+
+          <div class="flex flex-col">
+            <h3 class="text-[15px] font-semibold text-[#153969]">Valor da aula</h3>
+            <span class="text-xs text-slate-400">Defina o preço por hora/aula</span>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-1 text-[#153969]">
+          <span class="text-base font-extrabold">R$ {{ valorHoraAula }}</span>
+          <span class="text-xs font-normal text-slate-400">/ hora</span>
+          <svg class="ml-0.5 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
+        </div>
+      </div>
+
+      @if (editandoValorHora) {
+        <div class="mt-4 flex items-center justify-between gap-3 border-t border-slate-100 pt-3">
+          <label class="text-xs font-semibold text-[#153969]">Novo valor (R$):</label>
+          <div class="flex items-center gap-2">
+            <input
+              type="number"
+              min="30"
+              max="300"
+              step="5"
+              [(ngModel)]="valorHoraAula"
+              class="w-24 rounded-xl border border-slate-200 bg-slate-50 px-3 py-1.5 text-center text-sm font-bold text-[#153969] outline-none focus:border-[#153969]"
+            />
+            <button
+              type="button"
+              (click)="confirmarValorHora()"
+              class="cursor-pointer rounded-xl bg-[#153969] px-3.5 py-2 text-xs font-semibold text-white transition hover:bg-[#0f2a4d]"
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+
+    <span class="mb-2.5 block text-[11px] font-extrabold uppercase tracking-[0.14em] text-[#153969]">
+      Regiões Atendidas
+    </span>
+
+    <div class="mb-6 w-full rounded-[18px] border border-slate-200 bg-white p-4 shadow-sm">
+      <div class="mb-3.5 flex items-center gap-2">
+        <img src="assets/icons/location_icon_preferences.svg" alt="Regiões" class="h-4 w-4" />
+        <h3 class="text-sm font-bold text-[#153969]">Regiões que atendo</h3>
+      </div>
+
+      <div class="mb-3 flex flex-wrap gap-2">
+        @for (regiao of regioesAtendidas; track regiao) {
+          <span class="flex items-center gap-2 rounded-full bg-[#153969] px-3.5 py-2 text-xs font-semibold text-white">
+            <span>{{ regiao }}</span>
+            <button
+              type="button"
+              (click)="removerRegiao(regiao)"
+              class="flex cursor-pointer items-center justify-center transition hover:opacity-75"
+              [attr.aria-label]="'Remover ' + regiao"
+            >
+              <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </span>
+        }
+      </div>
+
+      @if (obterRegioesDisponiveisParaAdicionar().length > 0) {
+        <button
+          type="button"
+          (click)="alternarSeletorRegiao()"
+          class="flex items-center gap-1.5 rounded-full border border-dashed border-[#153969]/60 px-4 py-2 text-xs font-semibold text-[#153969] transition hover:bg-slate-50"
+        >
+          <span>+</span>
+          <span>Adicionar região</span>
+        </button>
+      }
+
+      @if (exibirSeletorRegiao && obterRegioesDisponiveisParaAdicionar().length > 0) {
+        <div class="mt-3 flex flex-wrap gap-2 border-t border-slate-100 pt-3">
+          @for (novaRegiao of obterRegioesDisponiveisParaAdicionar(); track novaRegiao) {
+            <button
+              type="button"
+              (click)="adicionarRegiao(novaRegiao)"
+              class="rounded-full bg-slate-100 px-3 py-1.5 text-xs font-medium text-[#153969] transition hover:bg-slate-200"
+            >
+              + {{ novaRegiao }}
+            </button>
+          }
+        </div>
+      }
+    </div>
+
+    <span class="mb-2.5 block text-[11px] font-extrabold uppercase tracking-[0.14em] text-[#153969]">
+      Horários Disponíveis
+    </span>
+
+    <div class="mb-6 w-full rounded-[18px] border border-slate-200 bg-white p-4 shadow-sm">
+      <div class="mb-2.5 grid grid-cols-7 gap-1.5 text-center">
+        @for (dia of diasSemana; track dia) {
+          <span class="text-[11px] font-bold text-slate-500">{{ dia }}</span>
+        }
+      </div>
+
+      <div class="flex flex-col gap-2">
+        @for (horario of horariosPadrao; track horario) {
+          <div class="grid grid-cols-7 gap-1.5">
+            @for (dia of diasSemana; track dia) {
+              <button
+                type="button"
+                (click)="alternarHorario(dia, horario)"
+                class="flex h-9 items-center justify-center rounded-lg text-[11px] font-semibold transition"
+                [ngClass]="horarioEstaDisponivel(dia, horario)
+                  ? 'bg-[#1ebd69] text-white shadow-sm'
+                  : 'bg-slate-200/80 text-slate-400 hover:bg-slate-200'"
+              >
+                {{ horario }}
+              </button>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="mt-4 flex items-center justify-center gap-6 border-t border-slate-100 pt-3.5">
+        <div class="flex items-center gap-2">
+          <span class="h-2.5 w-2.5 rounded-full bg-[#159947]"></span>
+          <span class="text-xs text-slate-500">Disponível</span>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <span class="h-2.5 w-2.5 rounded-full bg-slate-400"></span>
+          <span class="text-xs text-slate-500">Indisponível</span>
+        </div>
+      </div>
+    </div>
+
+    @if (mensagemFeedback) {
+      <div class="mb-4 w-full rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-center text-xs font-semibold text-emerald-800">
+        {{ mensagemFeedback }}
+      </div>
+    }
+
+    <button
+      type="button"
+      (click)="salvarAlteracoes()"
+      [disabled]="salvandoAlteracoes"
+      class="flex w-full items-center justify-center gap-2.5 rounded-[18px] bg-[#153969] py-4 text-[15px] font-bold text-white shadow-sm transition hover:bg-[#0f2a4d] disabled:opacity-60"
+    >
+      <svg class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+      </svg>
+      <span>{{ salvandoAlteracoes ? 'Salvando...' : 'Salvar Alterações' }}</span>
+    </button>
+
+  </div>
+</app-container-content>

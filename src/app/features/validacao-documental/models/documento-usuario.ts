@@ -1,4 +1,5 @@
 import { StatusDocumento } from '../../../core/enums/status-documento';
+import { TipoConta } from '../../../core/enums/tipo-conta';
 
 export interface DocumentoUsuario {
   id: string;
@@ -8,4 +9,8 @@ export interface DocumentoUsuario {
   status: StatusDocumento;
   dataEnvio: string;
   dataValidade?: string;
+  nomeUsuario?: string;
+  cpfUsuario?: string;
+  tipoConta?: TipoConta;
+  motivoRejeicao?: string;
 }

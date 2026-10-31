@@ -69,6 +69,10 @@ export class AuthService {
     );
   }
 
+  recuperarSenha(email: string): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/recuperar-senha`, { email });
+  }
+
   salvarSessao(resposta: AuthResponse): void {
     localStorage.setItem('token', resposta.token);
     localStorage.setItem('idUsuario', resposta.idUsuario);

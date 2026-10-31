@@ -1,0 +1,277 @@
+<div class="min-h-screen bg-[#F5F7FA] flex flex-col max-w-md mx-auto shadow-sm relative pb-12">
+
+  <!-- Cabeçalho Institucional (Padrão Figura 11 e 16) -->
+  <header class="bg-[#15396D] text-white px-5 py-4 flex items-center justify-between sticky top-0 z-20 shadow-md">
+    <div class="flex items-center gap-3">
+      <a routerLink="/login" class="p-1.5 -ml-1.5 rounded-full hover:bg-white/10 transition">
+        <img src="assets/icons/back_icon.svg" alt="Voltar" class="w-5 h-5" />
+      </a>
+      <h1 class="text-base font-bold tracking-tight">Validação de Documentos</h1>
+    </div>
+    <span class="bg-white/15 text-white text-[11px] font-semibold px-2.5 py-1 rounded-full flex items-center gap-1.5">
+      <img src="assets/icons/safe_icon.svg" alt="Segurança" class="w-3.5 h-3.5" />
+      Admin
+    </span>
+  </header>
+
+  <main class="p-4 space-y-4 flex-1">
+
+    <!-- Alerta de Retenção Sistêmica (Padrão Figura 11 - RF09 e RF10) -->
+    <div class="bg-[#FFF8E6] border-l-4 border-[#D69E2E] rounded-r-xl p-4 flex items-start gap-3 shadow-2xs">
+      <img src="assets/icons/warning_icon_documentation.svg" alt="Atenção" class="w-5 h-5 mt-0.5 shrink-0" />
+      <div>
+        <h2 class="text-xs font-bold text-[#975A16]">Fila de Análise Documental</h2>
+        <p class="text-[11px] text-[#B7791F] mt-1 leading-relaxed">
+          Para segurança da plataforma, valide a autenticidade da LADV, RG/CNH, Credencial e CRLV antes de liberar o acesso.
+        </p>
+      </div>
+    </div>
+
+    <!-- Mensagem de Confirmação após Aprovar/Rejeitar -->
+    @if (mensagemFeedback) {
+      <div class="bg-emerald-50 border border-emerald-300 text-emerald-800 px-4 py-3 rounded-xl text-xs font-semibold flex items-center gap-2 shadow-2xs">
+        <img src="assets/icons/verify_green_icon.svg" alt="Sucesso" class="w-4 h-4 shrink-0" />
+        <span>{{ mensagemFeedback }}</span>
+      </div>
+    }
+
+    <!-- Barra de Pesquisa (Padrão Figura 12) -->
+    <div class="bg-white rounded-xl border border-slate-200 px-3.5 py-2.5 flex items-center gap-2.5 shadow-2xs">
+      <img src="assets/icons/search_icon.svg" alt="Buscar" class="w-4 h-4 opacity-60" />
+      <input
+        type="text"
+        [(ngModel)]="termoBusca"
+        placeholder="Buscar por utilizador, ID ou tipo de anexo..."
+        class="w-full text-xs text-slate-700 placeholder-slate-400 focus:outline-none bg-transparent"
+      />
+    </div>
+
+    <!-- Filtros por Tipo de Documento (DocumentoUsuario['tipoDocumento']) -->
+    <div class="flex items-center gap-1.5 overflow-x-auto pb-1">
+      <button
+        type="button"
+        (click)="filtroTipo = 'TODOS'"
+        [ngClass]="filtroTipo === 'TODOS' ? 'bg-[#15396D] text-white' : 'bg-white text-slate-600 border border-slate-200'"
+        class="px-3 py-1.5 rounded-full text-xs font-semibold shrink-0 transition">
+        Todos ({{ documentos.length }})
+      </button>
+      <button
+        type="button"
+        (click)="filtroTipo = 'CredencialDetran'"
+        [ngClass]="filtroTipo === 'CredencialDetran' ? 'bg-[#15396D] text-white' : 'bg-white text-slate-600 border border-slate-200'"
+        class="px-3 py-1.5 rounded-full text-xs font-semibold shrink-0 transition">
+        Credencial
+      </button>
+      <button
+        type="button"
+        (click)="filtroTipo = 'CRLV'"
+        [ngClass]="filtroTipo === 'CRLV' ? 'bg-[#15396D] text-white' : 'bg-white text-slate-600 border border-slate-200'"
+        class="px-3 py-1.5 rounded-full text-xs font-semibold shrink-0 transition">
+        CRLV
+      </button>
+      <button
+        type="button"
+        (click)="filtroTipo = 'LADV'"
+        [ngClass]="filtroTipo === 'LADV' ? 'bg-[#15396D] text-white' : 'bg-white text-slate-600 border border-slate-200'"
+        class="px-3 py-1.5 rounded-full text-xs font-semibold shrink-0 transition">
+        LADV
+      </button>
+      <button
+        type="button"
+        (click)="filtroTipo = 'Identidade'"
+        [ngClass]="filtroTipo === 'Identidade' ? 'bg-[#15396D] text-white' : 'bg-white text-slate-600 border border-slate-200'"
+        class="px-3 py-1.5 rounded-full text-xs font-semibold shrink-0 transition">
+        Identidade
+      </button>
+    </div>
+
+    <!-- Listagem de Cards de Documentos -->
+    <div class="space-y-3.5">
+      @for (doc of documentosFiltrados; track doc.id) {
+        <div class="bg-white rounded-2xl p-4 border border-slate-200/90 shadow-xs space-y-3">
+
+          <!-- Cabeçalho do Card (Ícone + Título Oficial do Protótipo) -->
+          <div class="flex items-start gap-3">
+            <div class="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-center shrink-0">
+              <img [src]="obterIcone(doc.tipoDocumento)" [alt]="doc.tipoDocumento" class="w-5 h-5" />
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-xs font-bold text-slate-800 leading-snug">
+                {{ obterTitulo(doc.tipoDocumento) }}
+              </h3>
+              <p class="text-[11px] text-slate-500">
+                {{ obterSubtitulo(doc.tipoDocumento) }}
+              </p>
+              <p class="text-[11px] font-semibold text-[#15396D] mt-1 truncate">
+                {{ doc.usuarioId }}
+              </p>
+            </div>
+          </div>
+
+          <!-- Faixa de Status Documental (RF07 - Figura 11 e 16) -->
+          @if (verificarStatus(doc.status, 'EmAnalise')) {
+            <div class="bg-[#FFF8E6] text-[#B7791F] px-3 py-1.5 rounded-lg text-[11px] font-semibold flex items-center justify-between">
+              <span class="flex items-center gap-1.5">
+                <img src="assets/icons/time_icon.svg" alt="" class="w-3.5 h-3.5" />
+                Em Análise
+              </span>
+              <span class="text-[10px] opacity-80">Enviado: {{ doc.dataEnvio }}</span>
+            </div>
+          } @else if (verificarStatus(doc.status, 'Aprovado')) {
+            <div class="bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-lg text-[11px] font-semibold flex items-center justify-between">
+              <span class="flex items-center gap-1.5">
+                <img src="assets/icons/verify_green_icon.svg" alt="" class="w-3.5 h-3.5" />
+                Aprovado
+              </span>
+              <span class="text-[10px] opacity-80">Enviado: {{ doc.dataEnvio }}</span>
+            </div>
+          } @else {
+            <div class="bg-red-50 text-red-700 px-3 py-1.5 rounded-lg text-[11px] font-semibold flex items-center justify-between">
+              <span>✕ Rejeitado (Aguardando reenvio)</span>
+              <span class="text-[10px] opacity-80">{{ doc.dataEnvio }}</span>
+            </div>
+          }
+
+          <!-- Área Tracejada de Pré-visualização (Estilo Upload Figura 11) -->
+          <button
+            type="button"
+            (click)="selecionarDocumento(doc)"
+            class="w-full bg-[#FFFDF7] hover:bg-[#FFF8E6]/60 border-2 border-dashed border-[#D69E2E]/70 rounded-xl p-3 flex items-center justify-between transition text-left">
+            <div class="flex items-center gap-2.5">
+              <img src="assets/icons/document_icon.svg" alt="Anexo" class="w-4 h-4" />
+              <div>
+                <span class="text-xs font-bold text-[#975A16] block">Toque para inspecionar o documento</span>
+                <span class="text-[10px] text-[#B7791F]">
+                  {{ doc.dataValidade ? 'Validade informada: ' + doc.dataValidade : 'Visualizar imagem hospedada no Cloudinary' }}
+                </span>
+              </div>
+            </div>
+            <span class="text-xs font-bold text-[#15396D]">Abrir →</span>
+          </button>
+
+        </div>
+      } @empty {
+        <div class="bg-white rounded-2xl p-8 text-center border border-slate-200">
+          <p class="text-xs font-bold text-slate-700">Nenhum documento encontrado</p>
+          <p class="text-[11px] text-slate-400 mt-1">Altere os filtros de busca para ver outros registos.</p>
+        </div>
+      }
+    </div>
+
+  </main>
+
+  <!-- Modal de Inspeção e Decisão do Administrador (UC05 Completo) -->
+  @if (documentoSelecionado) {
+    <div class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-end sm:items-center justify-center p-0 sm:p-4">
+      <div class="bg-white w-full max-w-md rounded-t-3xl sm:rounded-2xl max-h-[92vh] overflow-y-auto p-5 space-y-4 shadow-2xl">
+
+        <!-- Topo do Modal -->
+        <div class="flex items-start justify-between border-b border-slate-100 pb-3">
+          <div>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-[#15396D]">
+              UC05 • Validar Documentação
+            </span>
+            <h3 class="text-sm font-bold text-slate-800 mt-0.5">
+              {{ obterTitulo(documentoSelecionado.tipoDocumento) }}
+            </h3>
+            <p class="text-[11px] text-slate-500 mt-0.5">
+              {{ documentoSelecionado.usuarioId }}
+            </p>
+          </div>
+          <button
+            type="button"
+            (click)="fecharModal()"
+            class="text-slate-400 hover:text-slate-600 text-sm font-bold px-2 py-1">
+            ✕
+          </button>
+        </div>
+
+        <!-- Exibição da Imagem do Cloudinary (UC05 - Passo 4) -->
+        <div class="bg-slate-100 rounded-2xl overflow-hidden border border-slate-200 relative">
+          <img
+            [src]="documentoSelecionado.arquivoUrl"
+            [alt]="documentoSelecionado.tipoDocumento"
+            class="w-full h-56 object-cover"
+          />
+          <a
+            [href]="documentoSelecionado.arquivoUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="absolute bottom-2.5 right-2.5 bg-slate-900/80 text-white text-[11px] px-3 py-1.5 rounded-lg font-medium hover:bg-slate-900 transition">
+            Ver tamanho original ↗
+          </a>
+        </div>
+
+        <!-- Metadados do Arquivo -->
+        <div class="bg-slate-50 rounded-xl p-3 border border-slate-200/70 flex items-center justify-between text-[11px] text-slate-600">
+          <span><strong>Enviado em:</strong> {{ documentoSelecionado.dataEnvio }}</span>
+          @if (documentoSelecionado.dataValidade) {
+            <span><strong>Validade:</strong> {{ documentoSelecionado.dataValidade }}</span>
+          }
+        </div>
+
+        <!-- Fluxo Alternativo UC05: Campo de Motivo da Rejeição -->
+        @if (modoRejeicao) {
+          <div class="space-y-1.5 pt-1">
+            <label class="block text-xs font-bold text-slate-700">
+              Motivo da rejeição <span class="text-red-500">*</span>
+            </label>
+            <textarea
+              [(ngModel)]="motivoRejeicao"
+              rows="3"
+              placeholder="Informe o motivo (ex.: imagem ilegível, documento expirado)..."
+              class="w-full rounded-xl border border-slate-300 p-3 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-red-500"
+            ></textarea>
+            @if (erroMotivo) {
+              <p class="text-[11px] text-red-600 font-medium">
+                Preencha o motivo (mínimo de 5 caracteres) para habilitar o reenvio pelo utilizador (RF08).
+              </p>
+            }
+          </div>
+        }
+
+        <!-- Botões de Ação Principal (Aprovar / Rejeitar) -->
+        @if (!modoRejeicao) {
+          <div class="grid grid-cols-2 gap-3 pt-1">
+            <button
+              type="button"
+              [disabled]="processandoAcao"
+              (click)="modoRejeicao = true"
+              class="py-3 px-4 rounded-xl border border-red-300 bg-red-50 hover:bg-red-100 text-red-700 text-xs font-bold transition">
+              Rejeitar
+            </button>
+
+            <button
+              type="button"
+              [disabled]="processandoAcao"
+              (click)="confirmarAprovacao(documentoSelecionado)"
+              class="py-3 px-4 rounded-xl bg-[#15396D] hover:bg-[#102c54] text-white text-xs font-bold transition flex items-center justify-center gap-1.5 shadow-sm">
+              <img src="assets/icons/verify_white_icon.svg" alt="" class="w-4 h-4" />
+              Aprovar
+            </button>
+          </div>
+        } @else {
+          <div class="grid grid-cols-2 gap-3 pt-1">
+            <button
+              type="button"
+              [disabled]="processandoAcao"
+              (click)="modoRejeicao = false"
+              class="py-3 px-4 rounded-xl border border-slate-200 bg-slate-100 text-slate-700 text-xs font-semibold transition">
+              Cancelar
+            </button>
+
+            <button
+              type="button"
+              [disabled]="processandoAcao"
+              (click)="confirmarRejeicao(documentoSelecionado)"
+              class="py-3 px-4 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-bold transition shadow-sm">
+              Confirmar Rejeição
+            </button>
+          </div>
+        }
+
+      </div>
+    </div>
+  }
+
+</div>

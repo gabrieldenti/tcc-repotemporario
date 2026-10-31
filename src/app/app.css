@@ -1,0 +1,14 @@
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+}
+
+@media (max-width: 360px) {
+  body {
+    font-size: 14px;
+  }
+}

@@ -22,6 +22,7 @@ export class Header {
   @Input() exibirNotificacao: boolean = false;
   @Input() exibirConfiguracao: boolean = false;
   @Input() exibirBotaoEditar: boolean = false;
+  @Input() rotaEditar: string = '/meu-perfil';
   @Input() exibirBotaoAdicionar: boolean = false;
 
   voltar(): void {
@@ -30,5 +31,9 @@ export class Header {
     } else {
       this.localizacao.back();
     }
+  }
+
+  irParaEdicao(): void {
+    this.roteador.navigate([this.rotaEditar]);
   }
 }

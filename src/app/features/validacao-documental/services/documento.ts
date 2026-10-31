@@ -6,32 +6,41 @@ import { Observable } from 'rxjs';
 
 @Service()
 export class Documento {
-  private http = inject(HttpClient);
   private apiUrl = `${environment.apiUrl}/documentos`;
 
-  /**
-   * Envia um arquivo físico (LADV, CNH, CRLV) para o backend,
-   * que posteriormente fará a persistência na nuvem (Cloudinary).
-   */
-  enviarDocumento(
-    arquivo: File,
-    tipoDocumento: string,
-    usuarioId: string,
-  ): Observable<DocumentoUsuario> {
-    const formData = new FormData();
-    formData.append('arquivo', arquivo);
-    formData.append('tipoDocumento', tipoDocumento);
-    formData.append('usuarioId', usuarioId);
+  private http = inject(HttpClient);
 
-    // O Angular detecta o FormData e configura o cabeçalho 'multipart/form-data' automaticamente
-    return this.http.post<DocumentoUsuario>(`${this.apiUrl}/upload`, formData);
+  // 1. RF05 e RF06: Enviar / Fazer upload dos documentos obrigatórios (LADV, CNH/Identidade, Credencial, CRLV)
+  enviarDocumento(formData: FormData): Observable<DocumentoUsuario> {
+    return this.http.post<DocumentoUsuario>(this.apiUrl, formData);
   }
 
-  /**
-   * Consulta o status atual da documentação do usuário
-   * para liberar ou bloquear o acesso às funcionalidades da plataforma (RF10).
-   */
-  obterStatusDocumentacao(usuarioId: string): Observable<DocumentoUsuario[]> {
-    return this.http.get<DocumentoUsuario[]>(`${this.apiUrl}/status/${usuarioId}`);
+  // 2. RF07: Consultar o status atual da análise documental do usuário logado
+  obterMeusDocumentos(): Observable<DocumentoUsuario[]> {
+    return this.http.get<DocumentoUsuario[]>(`${this.apiUrl}/meus-documentos`);
+  }
+
+  // 3. RF08: Permitir o reenvio de arquivos caso o status anterior tenha sido rejeitado
+  reenviarDocumento(id: string, formData: FormData): Observable<DocumentoUsuario> {
+    return this.http.put<DocumentoUsuario>(`${this.apiUrl}/${id}/reenviar`, formData);
+  }
+
+  // --- MÓDULO ADMINISTRADOR (RF09 / UC05) ---
+
+  // 4. UC05 (Passo 2): Listar todos os documentos pendentes/submetidos no painel do Admin
+  listarDocumentosAdmin(): Observable<DocumentoUsuario[]> {
+    return this.http.get<DocumentoUsuario[]>(`${this.apiUrl}/admin/todos`);
+  }
+
+  // 5. UC05 (Fluxo Principal - Passo 6 e 7): Aprovar o documento e liberar o acesso sistêmico (RF10)
+  aprovarDocumento(id: string): Observable<DocumentoUsuario> {
+    return this.http.patch<DocumentoUsuario>(`${this.apiUrl}/admin/${id}/aprovar`, {});
+  }
+
+  // 6. UC05 (Fluxo Alternativo - Passo 3): Rejeitar o documento informando o motivo da recusa (RF08)
+  rejeitarDocumento(id: string, motivoRejeicao: string): Observable<DocumentoUsuario> {
+    return this.http.patch<DocumentoUsuario>(`${this.apiUrl}/admin/${id}/rejeitar`, {
+      motivoRejeicao,
+    });
   }
 }
